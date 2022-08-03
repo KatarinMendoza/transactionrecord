@@ -1,0 +1,13 @@
+com\sistemabancario\transactionrecord\events\EventType.class
+com\sistemabancario\transactionrecord\domain\Client.class
+com\sistemabancario\transactionrecord\TransactionrecordApplication.class
+com\sistemabancario\transactionrecord\events\Event.class
+com\sistemabancario\transactionrecord\service\ITransactionRecordService.class
+com\sistemabancario\transactionrecord\events\TransactionrecordCreatedEvent.class
+com\sistemabancario\transactionrecord\controller\TransactionRecordController.class
+com\sistemabancario\transactionrecord\config\KafkaProducerConfig.class
+com\sistemabancario\transactionrecord\service\impl\TransactionRecordService.class
+com\sistemabancario\transactionrecord\domain\Account.class
+com\sistemabancario\transactionrecord\repository\ITransactionRecordRepository.class
+com\sistemabancario\transactionrecord\domain\TransactionRecord.class
+com\sistemabancario\transactionrecord\service\impl\TransactionEventsService.class

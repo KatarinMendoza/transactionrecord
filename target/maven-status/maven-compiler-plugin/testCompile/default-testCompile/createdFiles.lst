@@ -1,0 +1,3 @@
+com\sistemabancario\transactionrecord\controller\TransactionrecordControllerTest.class
+com\sistemabancario\transactionrecord\TransactionrecordApplicationTests.class
+com\sistemabancario\transactionrecord\service\TransactionRecordServiceTest.class

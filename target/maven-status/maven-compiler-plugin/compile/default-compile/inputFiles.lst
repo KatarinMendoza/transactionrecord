@@ -1,0 +1,13 @@
+C:\workspace_Spring\Proyectofinanciero\transactionrecord\src\main\java\com\sistemabancario\transactionrecord\events\EventType.java
+C:\workspace_Spring\Proyectofinanciero\transactionrecord\src\main\java\com\sistemabancario\transactionrecord\TransactionrecordApplication.java
+C:\workspace_Spring\Proyectofinanciero\transactionrecord\src\main\java\com\sistemabancario\transactionrecord\repository\ITransactionRecordRepository.java
+C:\workspace_Spring\Proyectofinanciero\transactionrecord\src\main\java\com\sistemabancario\transactionrecord\events\TransactionrecordCreatedEvent.java
+C:\workspace_Spring\Proyectofinanciero\transactionrecord\src\main\java\com\sistemabancario\transactionrecord\domain\Account.java
+C:\workspace_Spring\Proyectofinanciero\transactionrecord\src\main\java\com\sistemabancario\transactionrecord\domain\Client.java
+C:\workspace_Spring\Proyectofinanciero\transactionrecord\src\main\java\com\sistemabancario\transactionrecord\config\KafkaProducerConfig.java
+C:\workspace_Spring\Proyectofinanciero\transactionrecord\src\main\java\com\sistemabancario\transactionrecord\controller\TransactionRecordController.java
+C:\workspace_Spring\Proyectofinanciero\transactionrecord\src\main\java\com\sistemabancario\transactionrecord\domain\TransactionRecord.java
+C:\workspace_Spring\Proyectofinanciero\transactionrecord\src\main\java\com\sistemabancario\transactionrecord\service\impl\TransactionEventsService.java
+C:\workspace_Spring\Proyectofinanciero\transactionrecord\src\main\java\com\sistemabancario\transactionrecord\events\Event.java
+C:\workspace_Spring\Proyectofinanciero\transactionrecord\src\main\java\com\sistemabancario\transactionrecord\service\impl\TransactionRecordService.java
+C:\workspace_Spring\Proyectofinanciero\transactionrecord\src\main\java\com\sistemabancario\transactionrecord\service\ITransactionRecordService.java

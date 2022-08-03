@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransactionEventsService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transactionrecord</a> &gt; <a href="index.source.html" class="el_package">com.sistemabancario.transactionrecord.service.impl</a> &gt; <span class="el_source">TransactionEventsService.java</span></div><h1>TransactionEventsService.java</h1><pre class="source lang-java linenums">package com.sistemabancario.transactionrecord.service.impl;
+
+import com.sistemabancario.transactionrecord.domain.TransactionRecord;
+import com.sistemabancario.transactionrecord.events.Event;
+import com.sistemabancario.transactionrecord.events.EventType;
+import com.sistemabancario.transactionrecord.events.TransactionrecordCreatedEvent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
+import java.util.UUID;
+
+@Component
+<span class="nc" id="L16">public class TransactionEventsService {</span>
+
+    @Autowired
+    private KafkaTemplate&lt;String, Event&lt;?&gt;&gt; producer;
+
+    @Value(&quot;@${topic.transactionrecord.name:transactionrecords}&quot;)
+    private String topicTransaction;
+
+    public void publish(TransactionRecord transactionRecord){
+<span class="nc" id="L25">        TransactionrecordCreatedEvent created=new TransactionrecordCreatedEvent();</span>
+<span class="nc" id="L26">        created.setData(transactionRecord);</span>
+<span class="nc" id="L27">        created.setId(UUID.randomUUID().toString());</span>
+<span class="nc" id="L28">        created.setType(EventType.CREATED);</span>
+<span class="nc" id="L29">        created.setDate(new Date());</span>
+<span class="nc" id="L30">        this.producer.send(topicTransaction,created);</span>
+<span class="nc" id="L31">    }</span>
+
+    public  void Update(TransactionRecord transactionRecord){
+<span class="nc" id="L34">        TransactionrecordCreatedEvent update=new TransactionrecordCreatedEvent();</span>
+<span class="nc" id="L35">        update.setData(transactionRecord);</span>
+<span class="nc" id="L36">        update.setId(UUID.randomUUID().toString());</span>
+<span class="nc" id="L37">        update.setType(EventType.UPDATED);</span>
+<span class="nc" id="L38">        update.setDate(new Date());</span>
+<span class="nc" id="L39">        this.producer.send(topicTransaction,update);</span>
+<span class="nc" id="L40">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

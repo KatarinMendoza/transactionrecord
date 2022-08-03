@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransactionRecordService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transactionrecord</a> &gt; <a href="index.source.html" class="el_package">com.sistemabancario.transactionrecord.service.impl</a> &gt; <span class="el_source">TransactionRecordService.java</span></div><h1>TransactionRecordService.java</h1><pre class="source lang-java linenums">package com.sistemabancario.transactionrecord.service.impl;
+
+import com.sistemabancario.transactionrecord.domain.Account;
+import com.sistemabancario.transactionrecord.domain.Client;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Service;
+
+import com.sistemabancario.transactionrecord.domain.TransactionRecord;
+import com.sistemabancario.transactionrecord.repository.ITransactionRecordRepository;
+import com.sistemabancario.transactionrecord.service.ITransactionRecordService;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.client.RestTemplate;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.netty.http.client.HttpClient;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.Future;
+
+@Service
+<span class="nc" id="L24">@RequiredArgsConstructor</span>
+public class TransactionRecordService implements ITransactionRecordService {
+
+    @Autowired
+    private final ITransactionRecordRepository transactionRecordRepository;
+
+    private final TransactionEventsService transactionEventsService;
+
+    private KafkaTemplate&lt;String, TransactionRecord&gt; kafkaTemplate;
+    //private final IAccountRepository accountRepository;
+    @Override
+<span class="nc" id="L35">    public Flux&lt;TransactionRecord&gt; findAll() {return transactionRecordRepository.findAll();}</span>
+
+    @Override
+<span class="nc" id="L38">    public Mono&lt;TransactionRecord&gt; findById(String id) {return transactionRecordRepository.findById(id);}</span>
+
+<span class="nc" id="L40">    SimpleDateFormat format=new SimpleDateFormat();</span>
+<span class="nc" id="L41">    Date date = new Date(System.currentTimeMillis());</span>
+    @Override
+    public Mono&lt;TransactionRecord&gt; save(TransactionRecord transactionRecord){
+<span class="nc" id="L44">        transactionRecordRepository.findAll()</span>
+<span class="nc" id="L45">                .filter(x-&gt; x.getPayDate().before(date));</span>
+<span class="nc" id="L46">        transactionEventsService.publish(transactionRecord);</span>
+<span class="nc" id="L47">        return transactionRecordRepository.save(transactionRecord);</span>
+
+    }
+
+    @Override
+    public Mono&lt;TransactionRecord&gt; update(TransactionRecord transactionRecord) {
+<span class="nc" id="L53">        transactionEventsService.Update(transactionRecord);</span>
+<span class="nc" id="L54">        return transactionRecordRepository.save(transactionRecord);</span>
+    }
+
+    @Override
+<span class="nc" id="L58">    public Mono&lt;Void&gt; deleteById(String id) {return transactionRecordRepository.deleteById(id);}</span>
+
+    @Override
+    public Flux&lt;TransactionRecord&gt; findByDocument(String document) {
+<span class="nc" id="L62">        RestTemplate temp=new RestTemplate();</span>
+<span class="nc" id="L63">        Client client = temp.getForObject(&quot;http://localhost:8030/client/Consultas/&quot; + document, Client.class);</span>
+<span class="nc" id="L64">        Account account=temp.getForObject(&quot;http://localhost:8010/account/Consultas/&quot; + client.getId(),Account.class);</span>
+<span class="nc" id="L65">        return transactionRecordRepository.findAll()</span>
+<span class="nc" id="L66">                .filter(x-&gt;x.getAccountId().equals(account.getId()));</span>
+    }
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
